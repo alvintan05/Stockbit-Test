@@ -17,7 +17,6 @@ dependencies {
     implementation project(Modules.model)
     // TEST
     testImplementation TestLibraries.junit
-    implementation project(path: ':data:repository')
     testImplementation TestLibraries.koin
     testImplementation TestLibraries.mockWebServer
 }

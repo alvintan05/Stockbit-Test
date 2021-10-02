@@ -1,7 +1,6 @@
 package com.stockbit.remote
 
-import com.stockbit.model.DataItem
-import com.stockbit.repository.utils.Resource
+import com.stockbit.model.CryptoResponse
 
 /**
  * Implementation of [ExampleService] interface
@@ -11,10 +10,10 @@ class ExampleDatasource(private val exampleService: ExampleService) {
     fun fetchTopUsersAsync() =
         exampleService.fetchExampleAsync()
 
-    suspend fun getTopListCrypto(): Resource<List<DataItem?>?> {
+    suspend fun getTopListCrypto(): CryptoResponse? {
         val response = exampleService.getToplistCrypto()
-        return if (response.isSuccessful) Resource.success(response.body()?.data)
-        else Resource.error(Throwable(), null)
+        return if (response.isSuccessful) response.body()
+        else throw Exception(response.message())
     }
 
 }

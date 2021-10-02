@@ -22,7 +22,13 @@ class ExampleRepositoryImpl(
         return flow { }
     }
 
-    override suspend fun getTopListCrypto(): Resource<List<DataItem?>?> =
-        datasource.getTopListCrypto()
+    override suspend fun getTopListCrypto(): Resource<List<DataItem?>?> {
+        val responseData = datasource.getTopListCrypto()
+        return if (responseData != null) {
+            Resource.success(responseData.data)
+        } else {
+            Resource.error(Throwable(), null)
+        }
+    }
 
 }
