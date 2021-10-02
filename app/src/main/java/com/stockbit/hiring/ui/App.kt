@@ -1,4 +1,4 @@
-package com.stockbit.hiring
+package com.stockbit.hiring.ui
 
 import android.app.Application
 import com.stockbit.hiring.di.appComponent
