@@ -14,7 +14,8 @@ interface ExampleService {
     @GET("top/totaltoptiervolfull")
     suspend fun getToplistCrypto(
         @Query("limit") limit: Int = 20,
-        @Query("tsym") currencySymbol: String = "USD"
+        @Query("tsym") currencySymbol: String = "USD",
+        @Query("api_key") apiKey: String = "b0ba20209844ad359af05288e682533915fb92e85d665f72db6ec09edc3c57d7"
     ): Response<CryptoResponse>
 
 }
