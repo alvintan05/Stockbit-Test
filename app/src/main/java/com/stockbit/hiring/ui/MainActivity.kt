@@ -1,7 +1,7 @@
 package com.stockbit.hiring.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureNavController() {
         navController = findNavController(R.id.nav_host_fragment)
+        navController.setGraph(R.navigation.main_feature_graph)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

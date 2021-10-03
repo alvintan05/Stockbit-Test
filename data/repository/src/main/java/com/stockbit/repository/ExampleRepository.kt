@@ -1,5 +1,7 @@
 package com.stockbit.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.stockbit.local.dao.ExampleDao
 import com.stockbit.model.DataItem
 import com.stockbit.model.ExampleModel
@@ -10,7 +12,7 @@ import kotlinx.coroutines.flow.flow
 
 interface ExampleRepository {
     suspend fun getExample(): Flow<Resource<ExampleModel>>
-    suspend fun getTopListCrypto(): Resource<List<DataItem?>?>
+    suspend fun getTopListCrypto(): LiveData<PagingData<DataItem>>
 }
 
 class ExampleRepositoryImpl(
@@ -22,13 +24,7 @@ class ExampleRepositoryImpl(
         return flow { }
     }
 
-    override suspend fun getTopListCrypto(): Resource<List<DataItem?>?> {
-        val responseData = datasource.getTopListCrypto()
-        return if (responseData != null) {
-            Resource.success(responseData.data)
-        } else {
-            Resource.error(Throwable(), null)
-        }
-    }
+    override suspend fun getTopListCrypto(): LiveData<PagingData<DataItem>> =
+        datasource.getTopListCrypto()
 
 }

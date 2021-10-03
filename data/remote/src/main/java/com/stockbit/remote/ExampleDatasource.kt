@@ -1,6 +1,8 @@
 package com.stockbit.remote
 
-import com.stockbit.model.CryptoResponse
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 
 /**
  * Implementation of [ExampleService] interface
@@ -10,10 +12,13 @@ class ExampleDatasource(private val exampleService: ExampleService) {
     fun fetchTopUsersAsync() =
         exampleService.fetchExampleAsync()
 
-    suspend fun getTopListCrypto(): CryptoResponse? {
-        val response = exampleService.getToplistCrypto()
-        return if (response.isSuccessful) response.body()
-        else throw Exception(response.message())
-    }
+    fun getTopListCrypto() = Pager(
+        config = PagingConfig(
+            pageSize = 50,
+            maxSize = 150,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { PagingDataSource(exampleService) }
+    ).liveData
 
 }

@@ -1,15 +1,19 @@
-package com.stockbit.hiring.ui.watchlist
+package com.stockbit.hiring.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.stockbit.hiring.databinding.ListItemBinding
 import com.stockbit.model.DataItem
 import com.stockbit.model.USD
 
-class WatchlistAdapter : RecyclerView.Adapter<WatchlistAdapter.ViewHolder>() {
+class WatchlistPagingAdapter : PagingDataAdapter<DataItem, WatchlistPagingAdapter.ViewHolder>(
+    DIFF_CALLBACK
+) {
 
     private var cryptoList = listOf<DataItem?>()
 
@@ -26,14 +30,10 @@ class WatchlistAdapter : RecyclerView.Adapter<WatchlistAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (cryptoList[position] != null) {
-            cryptoList[position]?.let { holder.bindItem(it) }
-        }
+        getItem(position)?.let { holder.bindItem(it) }
     }
 
-    override fun getItemCount(): Int = cryptoList.size
-
-    inner class ViewHolder(val binding: ListItemBinding) :
+    inner class ViewHolder(private val binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -69,5 +69,15 @@ class WatchlistAdapter : RecyclerView.Adapter<WatchlistAdapter.ViewHolder>() {
         }
     }
 
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
+            override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+                return oldItem.coinInfo?.id == newItem.coinInfo?.id
+            }
 
+            override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }
