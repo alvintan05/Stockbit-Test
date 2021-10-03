@@ -12,7 +12,7 @@ data class CryptoResponse(
     @SerializedName("HasWarning")
     val hasWarning: Boolean? = null,
     @SerializedName("Data")
-    val data: List<DataItem?>? = null,
+    val data: List<DataItem>? = null,
 )
 
 data class DataItem(
@@ -48,5 +48,11 @@ data class Display(
 
 data class USD(
     @SerializedName("PRICE")
-    val price: String? = null
+    val price: String? = null,
+
+    @SerializedName("CHANGE24HOUR")
+    val changeHourValue: String? = null,
+
+    @SerializedName("CHANGEPCT24HOUR")
+    val changePercentageHour: Double? = null
 )

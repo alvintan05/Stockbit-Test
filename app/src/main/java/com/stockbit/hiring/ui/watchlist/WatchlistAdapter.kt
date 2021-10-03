@@ -1,10 +1,13 @@
 package com.stockbit.hiring.ui.watchlist
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.stockbit.hiring.databinding.ListItemBinding
 import com.stockbit.model.DataItem
+import com.stockbit.model.USD
 
 class WatchlistAdapter : RecyclerView.Adapter<WatchlistAdapter.ViewHolder>() {
 
@@ -33,10 +36,36 @@ class WatchlistAdapter : RecyclerView.Adapter<WatchlistAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bindItem(item: DataItem) {
-            binding.tvCryptoName.text = item.coinInfo?.name ?: ""
+            binding.tvCryptoName.text = item.coinInfo?.name
             binding.tvCryptoFullname.text = item.coinInfo?.fullName
-            binding.tvCryptoValue.text = item.display?.usd?.price ?: ""
+            binding.tvCryptoValue.text = item.display?.usd?.price
+
+            val changePercentage = item.display?.usd?.changePercentageHour
+            if (changePercentage == null || changePercentage == 0.0) {
+                binding.tvCryptoPercentage.setTextColor(Color.parseColor("#757575"))
+                binding.tvCryptoPercentage.text = setupChangeValue(item.display?.usd, "")
+            } else {
+                when {
+                    changePercentage > 0 -> {
+                        binding.tvCryptoPercentage.text =
+                            setupChangeValue(item.display?.usd, "+")
+                        binding.tvCryptoPercentage.setTextColor(Color.parseColor("#00ab6d"))
+                    }
+                    changePercentage < 0 -> {
+                        binding.tvCryptoPercentage.text =
+                            setupChangeValue(item.display?.usd, "")
+                        binding.tvCryptoPercentage.setTextColor(Color.parseColor("#FF0000"))
+                    }
+                }
+            }
+        }
+
+        private fun setupChangeValue(item: USD?, character: String): String {
+            return "${
+                item?.changeHourValue.toString().replace("$ ", character)
+            } ($character${item?.changePercentageHour}%)"
         }
     }
 
