@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:focusableInTouchMode="true"
     android:padding="10dp"
     tools:context=".ui.login.LoginFragment">
 
@@ -83,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="@string/username_or_email"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container_tv_or">
@@ -90,6 +93,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/username_or_email"
             android:inputType="text|textEmailAddress"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
@@ -100,7 +104,8 @@
         android:id="@+id/til_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
+        android:layout_marginTop="5dp"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_username_email"
@@ -109,6 +114,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
