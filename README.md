@@ -26,6 +26,7 @@ Ini adalah projek online test dari Stockbit dengan membuat dua tampilan, yaitu H
 - [x] Navigation Component
 - [x] Paging 3
 - [x] MVVM
+- [x] Coroutine
 - [x] Koin Dependency Injection
 
 ## Author
