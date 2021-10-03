@@ -39,4 +39,5 @@ dependencies {
     implementation KotlinLibraries.kotlinCoroutineCore
     implementation AndroidLibraries.kotlinCoroutineAndroid
     implementation AndroidLibraries.lifecycleViewModel
+    implementation AndroidLibraries.pagination
 }
