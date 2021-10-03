@@ -7,12 +7,10 @@ Ini adalah projek online test dari Stockbit dengan membuat dua tampilan, yaitu H
 
 ## Screenshots
 <p align="center">
-  <img src="https://drive.google.com/file/d/1Q0IFdclb0bfGVpkZf_mSydtbJagcrMp3/view?usp=sharing" width="270" alt="Login">
-  <img src="screenshots/2.png" width="270" alt="Home">
-  <img src="screenshots/3.png" width="270" alt="Maps">
-  <img src="screenshots/4.png" width="270" alt="My Report">
-  <img src="screenshots/5.png" width="270" alt="Detail Report">
-  <img src="screenshots/6.png" width="270" alt="Add Report">
+  <img src="screenshots/1.png" width="200" alt="Login">
+  <img src="screenshots/2.png" width="200" alt="Watchlist">
+  <img src="screenshots/3.png" width="200" alt="Empty and Error State">
+  <img src="screenshots/4.png" width="200" alt="Empty and Error State Pagination">
 </p>
 
 ## Features
