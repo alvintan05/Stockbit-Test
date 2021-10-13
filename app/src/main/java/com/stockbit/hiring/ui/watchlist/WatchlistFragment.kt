@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.stockbit.hiring.adapter.LocalPagingAdapter
 import com.stockbit.hiring.adapter.WatchlistLoadStateAdapter
 import com.stockbit.hiring.adapter.WatchlistPagingAdapter
 import com.stockbit.hiring.databinding.FragmentWatchlistBinding
@@ -22,7 +23,8 @@ class WatchlistFragment : Fragment() {
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var watchlistPagingAdapter: WatchlistPagingAdapter
+    //private lateinit var watchlistPagingAdapter: WatchlistPagingAdapter
+    private lateinit var adapter: LocalPagingAdapter
     private val watchlistViewModel: WatchlistViewModel by viewModel()
 
     override fun onCreateView(
@@ -36,10 +38,10 @@ class WatchlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        watchlistPagingAdapter = WatchlistPagingAdapter()
-        binding.rvCrypto.adapter = watchlistPagingAdapter.withLoadStateHeaderAndFooter(
-            header = WatchlistLoadStateAdapter { watchlistPagingAdapter.retry() },
-            footer = WatchlistLoadStateAdapter { watchlistPagingAdapter.retry() }
+        adapter = LocalPagingAdapter()
+        binding.rvCrypto.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = WatchlistLoadStateAdapter { adapter.retry() },
+            footer = WatchlistLoadStateAdapter { adapter.retry() }
         )
         binding.rvCrypto.addItemDecoration(
             DividerItemDecoration(
@@ -49,7 +51,7 @@ class WatchlistFragment : Fragment() {
         )
 
         lifecycleScope.launch {
-            watchlistPagingAdapter.loadStateFlow.collectLatest {
+            adapter.loadStateFlow.collectLatest {
                 binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
                 binding.rvCrypto.isVisible = it.refresh is LoadState.NotLoading
                 binding.ivWarning.isVisible = it.refresh is LoadState.Error
@@ -57,10 +59,10 @@ class WatchlistFragment : Fragment() {
         }
 
         watchlistViewModel.data.observe(viewLifecycleOwner, { resource ->
-            watchlistPagingAdapter.submitData(viewLifecycleOwner.lifecycle, resource)
+            adapter.submitData(viewLifecycleOwner.lifecycle, resource)
         })
 
-        binding.swipeRefresh.setOnRefreshListener { watchlistPagingAdapter.refresh() }
+        binding.swipeRefresh.setOnRefreshListener { adapter.refresh() }
     }
 
     override fun onDestroyView() {

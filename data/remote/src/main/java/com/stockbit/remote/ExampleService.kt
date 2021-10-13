@@ -1,6 +1,6 @@
 package com.stockbit.remote
 
-import com.stockbit.model.CryptoResponse
+import com.stockbit.model.network.CryptoResponse
 import com.stockbit.model.ExampleModel
 import retrofit2.Response
 import retrofit2.http.GET

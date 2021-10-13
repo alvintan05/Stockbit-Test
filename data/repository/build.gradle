@@ -22,4 +22,6 @@ dependencies {
     testImplementation project(Modules.commonTest)
     // PAGINATION
     implementation AndroidLibraries.pagination
+    // RETROFIT
+    implementation Libraries.retrofit
 }

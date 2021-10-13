@@ -8,10 +8,9 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.stockbit.hiring.databinding.ListItemBinding
-import com.stockbit.model.network.DataItem
-import com.stockbit.model.network.USD
+import com.stockbit.model.CryptoEntity
 
-class WatchlistPagingAdapter : PagingDataAdapter<DataItem, WatchlistPagingAdapter.ViewHolder>(
+class LocalPagingAdapter : PagingDataAdapter<CryptoEntity, LocalPagingAdapter.ViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -20,7 +19,7 @@ class WatchlistPagingAdapter : PagingDataAdapter<DataItem, WatchlistPagingAdapte
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LocalPagingAdapter.ViewHolder, position: Int) {
         getItem(position)?.let { holder.bindItem(it) }
     }
 
@@ -28,45 +27,45 @@ class WatchlistPagingAdapter : PagingDataAdapter<DataItem, WatchlistPagingAdapte
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindItem(item: DataItem) {
-            binding.tvCryptoName.text = item.coinInfo?.name
-            binding.tvCryptoFullname.text = item.coinInfo?.fullName
-            binding.tvCryptoValue.text = item.display?.usd?.price
+        fun bindItem(item: CryptoEntity) {
+            binding.tvCryptoName.text = item.name
+            binding.tvCryptoFullname.text = item.fullName
+            binding.tvCryptoValue.text = item.price
 
-            val changePercentage = item.display?.usd?.changePercentageHour
-            if (changePercentage == null || changePercentage == 0.0) {
+            val changePercentage = item.changePercentageHour
+            if (changePercentage == 0.0) {
                 binding.tvCryptoPercentage.setTextColor(Color.parseColor("#757575"))
-                binding.tvCryptoPercentage.text = setupChangeValue(item.display?.usd, "")
+                binding.tvCryptoPercentage.text = setupChangeValue(item, "")
             } else {
                 when {
                     changePercentage > 0 -> {
                         binding.tvCryptoPercentage.text =
-                            setupChangeValue(item.display?.usd, "+")
+                            setupChangeValue(item, "+")
                         binding.tvCryptoPercentage.setTextColor(Color.parseColor("#00ab6d"))
                     }
                     changePercentage < 0 -> {
                         binding.tvCryptoPercentage.text =
-                            setupChangeValue(item.display?.usd, "")
+                            setupChangeValue(item, "")
                         binding.tvCryptoPercentage.setTextColor(Color.parseColor("#FF0000"))
                     }
                 }
             }
         }
 
-        private fun setupChangeValue(item: USD?, character: String): String {
+        private fun setupChangeValue(item: CryptoEntity, character: String): String {
             return "${
-                item?.changeHourValue.toString().replace("$ ", character)
-            } ($character${item?.changePercentageHour}%)"
+                item.changeHourValue.replace("$ ", character)
+            } ($character${item.changePercentageHour}%)"
         }
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
-            override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
-                return oldItem.coinInfo?.id == newItem.coinInfo?.id
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CryptoEntity>() {
+            override fun areItemsTheSame(oldItem: CryptoEntity, newItem: CryptoEntity): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+            override fun areContentsTheSame(oldItem: CryptoEntity, newItem: CryptoEntity): Boolean {
                 return oldItem == newItem
             }
         }

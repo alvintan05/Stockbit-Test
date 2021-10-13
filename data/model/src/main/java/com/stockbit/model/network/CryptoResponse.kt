@@ -1,4 +1,4 @@
-package com.stockbit.model
+package com.stockbit.model.network
 
 import com.google.gson.annotations.SerializedName
 
@@ -25,7 +25,7 @@ data class DataItem(
 
 data class CoinInfo(
     @SerializedName("Id")
-    val id: String? = null,
+    val id: Int? = null,
 
     @SerializedName("Name")
     val name: String? = null,
